@@ -156,6 +156,8 @@ header {
     @include background-cover;
     background-position: center;
     background-image: url('../img/header.jpg');
+    /* EXTRA */
+    background-attachment: fixed; /* Add this line to prevent scrolling */
     text-align: center;
     color: white;
     .header-content {
