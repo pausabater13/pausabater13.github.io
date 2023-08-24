@@ -1079,10 +1079,6 @@ body {
   line-height: 1.42857143;
   color: #333;
   /* background-color: #fff;*/
-  background-image: "img/header.jpg"; /* Add your background image URL here */
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed; /* Add this line to prevent scrolling */
 }
 input,
 button,
