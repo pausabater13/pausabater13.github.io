@@ -149,16 +149,13 @@ aside {
 
 // Homepage Header
 
-/*header {
+header {
     position: relative;
     width: 100%;
     min-height: auto;
     @include background-cover;
     background-position: center;
-    /*background-image: url('../img/header.jpg');
-    /*--------- EXTRA */
-    /*background-attachment: fixed; /* Add this line to prevent scrolling */
-    /*---------  *//*
+    background-image: url('../img/header.jpg');
     text-align: center;
     color: white;
     .header-content {
@@ -206,7 +203,7 @@ aside {
             }
         }
     }
-}*/
+}
 
 // Sections
 
