@@ -737,6 +737,9 @@
 .ti-layout-tab-v:before {
 	content: "\e6ed";
 }
+.ti-microchip:before {
+	content: "\e123";
+}
 .ti-layout-tab-min:before {
 	content: "\e6ee";
 }
