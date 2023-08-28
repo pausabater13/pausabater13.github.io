@@ -1,9 +1,9 @@
 {
-  "name": "John_Doe",
+  "name": "Pau Sabater Personal Website",
   "version": "1.5.0",
   "description": "An elegant responsive bootstrap 4.x theme.",
   "main": "gulpfile.js",
-  "author": "DevCRUD",
+  "author": "Pau Sabater",
   "scripts": {
     "start": "gulp"
   },
