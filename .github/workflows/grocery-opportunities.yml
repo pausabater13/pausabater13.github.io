@@ -1,0 +1,29 @@
+# Weekly run: scrape grocery prices, fetch Google Trends, derive opportunities, push to Notion.
+# Set NOTION_API_KEY and NOTION_DATABASE_ID in repo Secrets for Notion push.
+name: Grocery Opportunities
+
+on:
+  schedule:
+    # Every Monday at 09:00 UTC
+    - cron: "0 9 * * 1"
+  workflow_dispatch: # Allow manual run from Actions tab
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install grocery-opportunities
+        run: pip install ./grocery_opportunities
+
+      - name: Run pipeline (scrape → trends → opportunities → Notion)
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        run: grocery-opportunities

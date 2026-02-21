@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "grocery-opportunities"
+version = "0.1.0"
+description = "Scrapes grocery pricing + Google Trends, generates opportunities, pushes to Notion."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "requests>=2.28.0",
+    "beautifulsoup4>=4.11.0",
+    "pytrends>=4.9.0",
+    "pandas>=2.0.0",
+    "notion-client>=2.2.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.scripts]
+grocery-opportunities = "grocery_opportunities.run:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["grocery_opportunities*"]
+
+[tool.uv]
+dev-dependencies = []

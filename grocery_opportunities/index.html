@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Grocery Opportunities — scrapes prices, Google Trends, pushes to Notion.">
+    <title>Grocery Opportunities | PSN</title>
+    <link rel="stylesheet" href="../assets/vendors/themify-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../assets/css/johndoe.css">
+</head>
+<body>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html#home">Pau Sabater</a>
+            <a href="../index.html#portfolio" class="nav-link">← Portfolio</a>
+        </div>
+    </nav>
+
+    <section class="section">
+        <div class="container">
+            <h1 class="mb-4"><span class="text-danger">Grocery</span> Opportunities</h1>
+            <p class="mb-4">Python pipeline that runs weekly (via GitHub Actions) and:</p>
+            <ul class="mb-4">
+                <li>Scrapes grocery pricing data</li>
+                <li>Pulls Google Trends for food keywords</li>
+                <li>Generates derived opportunity ideas and scores</li>
+                <li>Pushes structured data into Notion via API</li>
+                <li>Flags opportunities where score &gt; threshold and sets Status to <strong>Decision Required</strong></li>
+            </ul>
+            <p class="text-muted">Results are written to a Notion database each run. Configure <code>NOTION_API_KEY</code> and <code>NOTION_DATABASE_ID</code> in the repo’s GitHub Actions secrets to enable the Notion push.</p>
+            <p><a href="https://github.com/pausabater13/pausabater13.github.io/tree/master/grocery_opportunities" class="btn btn-primary btn-rounded" target="_blank" rel="noopener"><i class="ti-github pr-2"></i>View source</a></p>
+        </div>
+    </section>
+</body>
+</html>
