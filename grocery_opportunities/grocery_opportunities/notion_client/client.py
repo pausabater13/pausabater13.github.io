@@ -5,6 +5,7 @@ import logging
 from typing import Any
 
 from notion_client import Client
+from notion_client.errors import APIResponseError
 
 from grocery_opportunities.config import (
     NOTION_API_KEY,
@@ -77,6 +78,26 @@ def push_opportunities_to_notion(
     client = Client(auth=NOTION_API_KEY)
     created_ids: list[str] = []
 
+    # Fail fast: validate token and database access with one call
+    try:
+        client.databases.retrieve(database_id)
+    except APIResponseError as e:
+        if e.status == 401:
+            logger.error(
+                "Notion API token is invalid (401). Fix: 1) Use the Integration Secret from "
+                "https://www.notion.so/my-integrations (not the integration name). "
+                "2) In your database, click ... → Add connections → select your integration. "
+                "3) In GitHub Secrets, set NOTION_API_KEY to the secret only (no spaces or quotes)."
+            )
+        elif e.status == 404:
+            logger.error(
+                "Notion database not found or not shared with your integration (404). "
+                "Open the database in Notion → ... → Add connections → select your integration."
+            )
+        else:
+            logger.exception("Notion API error: %s", e)
+        raise
+
     for opp in opportunities:
         score_above = opp.score > threshold
         properties = _build_page_properties(opp, score_above)
@@ -96,6 +117,14 @@ def push_opportunities_to_notion(
                     opp.score,
                     status_label,
                 )
+        except APIResponseError as e:
+            if e.status == 401:
+                logger.error(
+                    "Notion API token is invalid (401). Fix: 1) Use the Integration Secret from "
+                    "https://www.notion.so/my-integrations 2) Database → ... → Add connections → your integration "
+                    "3) GitHub Secret NOTION_API_KEY = secret only, no spaces."
+                )
+            raise
         except Exception as e:
             logger.exception("Failed to create Notion page for '%s': %s", opp.title, e)
 
