@@ -59,4 +59,12 @@ window.GEO = (async () => {
   ]);
   return topojson.feature(topo, topo.objects.land);
 })();
-window.FALLBACK_TIMER = setTimeout(() => window.WORLD || UI.fallback(), 15000);
+// Si el 3D no arranca en 15 s de pestaña visible, se pasa a la versión formal.
+// En segundo plano el navegador pausa requestAnimationFrame y el mundo espera; eso no cuenta como fallo.
+(() => {
+  let left = 15000, t0 = 0;
+  const arm = () => { t0 = performance.now(); window.FALLBACK_TIMER = setTimeout(() => window.WORLD || UI.fallback(), left); };
+  const disarm = () => { clearTimeout(window.FALLBACK_TIMER); left = Math.max(0, left - (performance.now() - t0)); };
+  if (!document.hidden) arm();
+  document.addEventListener('visibilitychange', () => { if (window.WORLD) return; document.hidden ? disarm() : arm(); });
+})();

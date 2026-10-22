@@ -265,6 +265,18 @@ const builders = {
     [[.9, 1.1, .55], [.65, .8, 1.5], [.45, .5, 2.15]].forEach(([w, h, y]) => { const b = mesh(new THREE.BoxGeometry(w, h, w), mat('#b9a98f')); b.position.y = y; g.add(b); });
     const tip = mesh(new THREE.ConeGeometry(.36, .6, 4), mat('#8d7d66')); tip.position.y = 2.7; tip.rotation.y = Math.PI / 4; g.add(tip);
   },
+  poster(g, s){
+    // Atril con un póster genérico (bloques de texto y una curva), no el póster real
+    for (const x of [-.75, .75]){ const leg = mesh(new THREE.BoxGeometry(.06, 2.2, .06), DARK); leg.position.set(x, 1.1, -.1); leg.rotation.x = -.12; g.add(leg); }
+    const cv = document.createElement('canvas'); cv.width = 256; cv.height = 192; const c = cv.getContext('2d');
+    c.fillStyle = '#f5f3ee'; c.fillRect(0, 0, 256, 192); c.fillStyle = '#0f6f66'; c.fillRect(14, 12, 228, 16);
+    c.fillStyle = '#c9ced6'; for (let i = 0; i < 6; i++){ c.fillRect(14, 40 + i * 10, 100, 5); c.fillRect(142, 40 + i * 10, 100, 5); }
+    c.strokeStyle = '#ff5a36'; c.lineWidth = 3; c.beginPath();
+    for (let x = 0; x <= 228; x++){ const u = (x - 114) / 18, y = Math.abs(u) < 1e-3 ? 1 : Math.sin(u) / u; c.lineTo(14 + x, 172 - 55 * y * y); } c.stroke();
+    const tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
+    const face = new THREE.MeshStandardMaterial({ map: tex, roughness: .8 }), board = mesh(new THREE.BoxGeometry(1.8, 1.35, .05), [STONE, STONE, STONE, STONE, face, face]);
+    board.position.set(0, 1.55, 0); board.rotation.x = -.12; g.add(board);
+  },
   award(g, s){
     const ped = mesh(new THREE.CylinderGeometry(.45, .6, .8, 24), STONE); ped.position.y = .5; g.add(ped);
     const star = mesh(new THREE.OctahedronGeometry(.42), mat('#e8c45a', { metalness: .9, roughness: .25 })); star.position.y = 1.55; g.add(star);
@@ -481,7 +493,7 @@ const ICONS = {
   face:'<circle cx="4.5" cy="9" r="2.5"/><circle cx="11.5" cy="9" r="2.5"/><path d="M7 9h2"/>', lab:'<path d="M2 14h12M3 14V6h10v8M6 9h1M9 9h1M6 11h1M9 11h1"/>',
   returns:'<path d="M2 5l6-3 6 3v6l-6 3-6-3zM2 5l6 3 6-3M8 8v6"/>', beam:'<path d="M4 15V3M2 5h4M2 8h4M8 6c2 1 4 1 6 1M8 10c2-1 4-1 6-1"/>',
   dome:'<path d="M2 14h12M3 14v-4h10v4M4 10a4 4 0 0 1 8 0"/>', tower:'<path d="M5 14V6h6v8M6 6l2-4 2 4M3 14h10"/>',
-  award:'<path d="M8 1.5l2 4 4.3.6-3.1 3 .8 4.4L8 11.4l-4 2.1.8-4.4-3.1-3 4.3-.6z"/>', macau:'<path d="M8 15V3M6 6h4M3.5 4a6 6 0 0 1 0 6M12.5 4a6 6 0 0 0 0 6"/>',
+  poster:'<path d="M3 2h10v8H3zM5 10l-2 5M11 10l2 5M5 5h6M5 7h4"/>', award:'<path d="M8 1.5l2 4 4.3.6-3.1 3 .8 4.4L8 11.4l-4 2.1.8-4.4-3.1-3 4.3-.6z"/>', macau:'<path d="M8 15V3M6 6h4M3.5 4a6 6 0 0 1 0 6M12.5 4a6 6 0 0 0 0 6"/>',
 };
 const compass = document.querySelector('#compass'), cEls = [];
 ['N','NE','E','SE','S','SO','O','NO'].forEach((l, i) => { const e = document.createElement('span'); e.className = 'cl' + (i ? '' : ' n'); e.textContent = l; compass.appendChild(e); cEls.push([e, i * 45]); });
@@ -696,6 +708,8 @@ function frame(){
   const dt = Math.min(clock.getDelta(), 1 / 20), t = clock.elapsedTime;
   step(dt, t); renderer.render(scene, camera);
 }
-document.querySelector('#loading').remove();
+document.querySelector('#loading')?.remove();
+// Si la versión formal se abrió por espera, el mundo ya está disponible: se puede volver a él
+const toWorld = document.querySelector('#toWorld'); if (toWorld) toWorld.hidden = false;
 if (!document.body.classList.contains('formal')) renderer.setAnimationLoop(frame);
 addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
