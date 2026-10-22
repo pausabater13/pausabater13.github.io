@@ -26,7 +26,7 @@ renderer.shadowMap.enabled = !low;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.querySelector('#stage').appendChild(renderer.domElement);
 renderer.domElement.tabIndex = 0;
-renderer.domElement.setAttribute('aria-label', 'Mundo 3D: conduce con WASD o las flechas');
+renderer.domElement.setAttribute('aria-label', '3D world: drive with WASD or the arrow keys');
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#05070c');
@@ -384,15 +384,15 @@ const MODES = {
 let mode = 'car', morph = null, lift = .45;
 const TRIGGERS = { terrassa: 'fs', iri: 'drone' }, armed = { terrassa: true, iri: true };
 const MODE_TEXT = {
-  fs: ['Modo monoplaza', 'Te has convertido en un Formula Student como el de UPC EcoRacing: más agarre y más velocidad.', 'terrassa'],
-  drone: ['Modo dron', 'Ahora vuelas como el dron del IRI: un controlador con inercia te mantiene en vuelo estacionario.', 'iri'],
+  fs: ['Race car mode', 'You turned into a Formula Student car like UPC EcoRacing’s: more grip, more speed.', 'terrassa'],
+  drone: ['Drone mode', 'You now fly like the IRI drone: a controller with inertia keeps you hovering.', 'iri'],
 };
 function setMode(m){
   if (m === mode || (morph && morph.to === m)) return;
   morph = { to: m, t: reduce ? 1 : 0, swapped: false };
   emitWave(); burst = 1;
   if (MODE_TEXT[m]){ const [title, text, base] = MODE_TEXT[m];
-    UI.toast(title, text, [['Ver la base', () => { WORLD.goTo(base); }, true], ['Volver al coche', () => setMode('car')]]); }
+    UI.toast(title, text, [['See the base', () => { WORLD.goTo(base); }, true], ['Back to the car', () => setMode('car')]]); }
 }
 let burst = 0;
 
@@ -509,7 +509,7 @@ function updateCompass(){
     if (show) placed.push(x);
     s.mk.style.transform = `translateX(${x}px) translateX(-50%)`;
     s.mk.style.visibility = show ? 'visible' : 'hidden';
-    const txt = km.toLocaleString('es-ES') + ' km'; if (s.mkTxt.textContent !== txt) s.mkTxt.textContent = txt;
+    const txt = km.toLocaleString('en-US') + ' km'; if (s.mkTxt.textContent !== txt) s.mkTxt.textContent = txt;
     s.mk.classList.toggle('seen', UI.visited.has(s.it.id));
   }
 }

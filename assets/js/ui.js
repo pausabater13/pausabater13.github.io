@@ -5,7 +5,7 @@ window.UI = (() => {
   let current = null, onBeamMode = null;
   for (const it of ITEMS){
     const li = document.createElement('li');
-    li.innerHTML = `<button data-id="${it.id}"><span class="yr">${it.yr}</span><span class="place">${it.place}</span><span class="seen" aria-label="visitado">✓</span><span class="what">${it.what}</span></button>`;
+    li.innerHTML = `<button data-id="${it.id}"><span class="yr">${it.yr}</span><span class="place">${it.place}</span><span class="seen" aria-label="visited">✓</span><span class="what">${it.what}</span></button>`;
     li.firstChild.addEventListener('click', () => window.WORLD ? WORLD.goTo(it.id) : show(it.id));
     list.appendChild(li);
   }
@@ -15,9 +15,9 @@ window.UI = (() => {
     const it = ITEMS.find(d => d.id === id); if (!it || current === id) return;
     current = id; visited.add(id); count();
     list.querySelectorAll('button').forEach(b => { b.setAttribute('aria-current', b.dataset.id === id); b.classList.toggle('visited', visited.has(b.dataset.id)); });
-    const links = it.links.map(([t, u]) => `<li><a href="${u}" rel="noopener">${t} ↗</a></li>`).join('') + (it.pending ? `<li class="pending">pendiente: ${it.pending}</li>` : '');
+    const links = it.links.map(([t, u]) => `<li><a href="${u}" rel="noopener">${t} ↗</a></li>`).join('') + (it.pending ? `<li class="pending">pending: ${it.pending}</li>` : '');
     card.innerHTML = `<span class="place">${it.place}</span><h3>${it.what}</h3><p>${it.text}</p>
-      ${it.beam ? `<div class="ctrl" role="group" aria-label="Tipo de haz"><button data-m="bessel" aria-pressed="true">Bessel · se autorrepara</button><button data-m="focus">enfocado</button><button data-m="airy">curvo</button></div>` : ''}
+      ${it.beam ? `<div class="ctrl" role="group" aria-label="Beam type"><button data-m="bessel" aria-pressed="true">Bessel · self-healing</button><button data-m="focus">focused</button><button data-m="airy">curved</button></div>` : ''}
       ${it.note ? `<p class="note">${it.note}</p>` : ''}<ul>${links}</ul>`;
     card.querySelectorAll('[data-m]').forEach(b => b.onclick = () => {
       card.querySelectorAll('[data-m]').forEach(x => x.setAttribute('aria-pressed', x === b)); onBeamMode && onBeamMode(b.dataset.m);
@@ -45,7 +45,7 @@ window.UI = (() => {
   $('#toWorld').onclick = closeFormal;
   if (location.hash === '#formal') openFormal();
   addEventListener('hashchange', () => location.hash === '#formal' ? openFormal() : document.body.classList.contains('formal') && closeFormal());
-  function fallback(){ $('#loading') && $('#loading').remove(); $('#toWorld').hidden = true; openFormal('Este navegador no puede mostrar el mundo 3D; aquí tienes todo el contenido.'); }
+  function fallback(){ $('#loading') && $('#loading').remove(); $('#toWorld').hidden = true; openFormal('This browser cannot display the 3D world; here is all the content.'); }
   return { show, hide, fallback, toast, openFormal, visited, get current(){ return current; }, set onBeamMode(f){ onBeamMode = f; } };
 })();
 
