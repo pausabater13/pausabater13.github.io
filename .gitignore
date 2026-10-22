@@ -4,3 +4,6 @@ grocery_opportunities/.env
 grocery_opportunities/__pycache__/
 **/__pycache__/
 *.py[cod]
+
+# macOS
+.DS_Store
