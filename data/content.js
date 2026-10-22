@@ -17,7 +17,7 @@ window.PUBS = [
     links: [['DOI','https://doi.org/10.1109/taffc.2026.3679039'],['arXiv','https://arxiv.org/abs/2603.27798']] },
   { title: 'Paper accepted at IEEE GLOBECOM 2026', venue: 'Macau, Dec 7–11. Title and details after publication', links: [] },
 ];
-window.SECTIONS = [['research','Research'],['industry','Industry'],['product','Product'],['comp','Competitions'],['edu','Education and fellowships']];
+window.SECTIONS = [['research','Research'],['talks','Talks and posters'],['industry','Industry'],['product','Product'],['comp','Competitions'],['edu','Education and fellowships']];
 window.ITEMS = [
   { id:'algemesi', cat:'product', kind:'orchard', label:'Algemesí', yr:'now', place:'Algemesí · València', what:'Agricultural robotics for citrus', at:[-1.2,38.6], rel:['iri','cfis'],
     text:'Born in Algemesí, in the Ribera del Xúquer. Today I build decision tools for small citrus growers in the region.',
@@ -61,6 +61,9 @@ window.ITEMS = [
   { id:'rdp', cat:'edu', kind:'award', yr:'2026', place:'Madrid · Rafael del Pino Foundation', label:'Rafael del Pino', what:'Rafael del Pino Excellence Fellowship', at:[-4.5,40.6],
     text:'One of the 2026 Rafael del Pino Excellence Fellows, for doctoral studies at Northeastern University.',
     links:[['2026 fellows','https://frdelpino.es/beca/becarios-de-excelencia-rafael-del-pino-2026/'],['Call','https://frdelpino.es/beca/convocatoria-becas-de-excelencia-rafael-del-pino/']] },
+  { id:'miami', cat:'talks', kind:'poster', yr:'Mar 2026', place:'Miami · DHARMA.AI workshop', label:'DHARMA.AI', what:'Poster presentation at DHARMA.AI', at:[-80.19,25.76], rel:['boston'],
+    text:'Poster presented at the DHARMA.AI workshop in Miami, March 2026.',
+    links:[], pending:'poster title and workshop link' },
   { id:'macau', cat:'research', kind:'macau', yr:'Dec 2026', place:'Macau · IEEE GLOBECOM', what:'Paper accepted at GLOBECOM 2026', at:[113.56,22.15], rel:['boston'],
     text:'Paper accepted at IEEE GLOBECOM 2026 (Macau, December 7–11). Title and details after publication.',
     links:[['GLOBECOM 2026','https://comsoc.org/conferences-events/ieee-global-communications-conference-2026']] },
